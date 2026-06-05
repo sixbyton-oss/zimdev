@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 // This works on Netlify, Vercel, tiiny.host, cPanel, Cloudflare Pages, GitHub Pages, etc.
 export default defineConfig({
   css: { transformer: 'esbuild' },
-  base: '/zimdev/',
+  base: './',
   plugins: [react()],
   resolve: {
     alias: {
