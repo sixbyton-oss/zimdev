@@ -1,0 +1,129 @@
+/* ============================================================
+   Infinite Logo Slider — Pure CSS Animation
+   Smooth continuous left-scrolling logos carousel
+   ============================================================ */
+
+.logo-slider-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 28px 0;
+  background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.4) 30%, rgba(15,23,42,0.4) 70%, rgba(15,23,42,0) 100%);
+}
+
+.logo-slider-track {
+  display: flex;
+  gap: 56px; /* spacing between logo items */
+  width: max-content; /* shrink-to-fit for duplicate */
+  align-items: center;
+  
+  /* The main animation: smooth, slow, infinite, linear loop to left */
+  animation: logoScrollLeft var(--slider-duration, 35s) linear infinite;
+  will-change: transform;
+}
+
+.logo-slider-track:hover {
+  /* Optional: slightly faster on hover so it feels responsive — can remove if you want constant speed */
+  animation-play-state: running;
+}
+
+/* Each individual logo container */
+.logo-slide-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--logo-height, 80px);
+  width: auto;
+  min-width: var(--logo-min-width, 140px);
+  max-width: 200px;
+  opacity: 0.78;
+  transition: all 0.45s cubic-bezier(0.22,1,0.36,1);
+  filter: grayscale(20%) brightness(0.95);
+  padding: 8px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(148,163,184,0.07);
+}
+
+.logo-slide-item:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 10px 32px rgba(6,182,212,0.12), 0 0 0 1px rgba(6,182,212,0.08);
+  background: rgba(6,182,212,0.04);
+  z-index: 5;
+}
+
+.logo-slide-item img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  max-height: 72px;
+  pointer-events: none; /* let parent handle interactions */
+}
+
+/* ---- Left & Right Edge Fades ---- */
+.logo-slider-fade-left,
+.logo-slider-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 10;
+  pointer-events: none;
+}
+.logo-slider-fade-left {
+  left: 0;
+  background: linear-gradient(90deg, rgba(2,6,23,1) 0%, transparent 100%);
+}
+.logo-slider-fade-right {
+  right: 0;
+  background: linear-gradient(-90deg, rgba(2,6,23,1) 0%, transparent 100%);
+}
+
+/* Optional: Section label bar above slider */
+.logo-slider-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #94a3b8; /* slate-400 */
+  margin-bottom: 12px;
+  position: relative;
+  padding: 0 18px;
+}
+
+/* Small dots on each side of label */
+.logo-slider-label::before,
+.logo-slider-label::after {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(148,163,184,0.4));
+  vertical-align: middle;
+}
+.logo-slider-label::after {
+  background: linear-gradient(90deg, rgba(148,163,184,0.4), transparent);
+}
+
+
+/* ===========================================
+   THE KEYFRAME ANIMATION
+   =========================================== */
+@keyframes logoScrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* -50% = one full set of items scrolled away */
+}
+
+/* 
+   HOW IT WORKS:
+   • You put TWO identical sets of logos in the track
+   • CSS translates from 0 to -50%
+   • When it hits -50%, it visually looks exactly the same as 0
+   • So the animation seamlessly loops forever!
+*/
