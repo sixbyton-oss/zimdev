@@ -1,0 +1,18 @@
+0 verbose cli /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/bin/npm
+1 info using npm@11.15.0
+2 info using node@v26.2.0
+3 silly config load:file:/data/data/com.termux/files/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/data/data/com.termux/files/home/.npmrc
+5 silly config load:file:/data/data/com.termux/files/usr/etc/npmrc
+6 verbose title npm pkg set scripts.deploy=gh-pages -d dist
+7 verbose argv "pkg" "set" "scripts.deploy=gh-pages -d dist"
+8 verbose logfile logs-max:10 dir:/data/data/com.termux/files/home/.npm/_logs/2026-06-05T18_49_44_302Z-
+9 verbose logfile /data/data/com.termux/files/home/.npm/_logs/2026-06-05T18_49_44_302Z-debug-0.log
+10 silly logfile start cleaning logs, removing 1 files
+11 silly logfile done cleaning log files
+12 verbose cwd /data/data/com.termux/files/home
+13 verbose os Linux 4.19.127-perf-g7288046673d5
+14 verbose node v26.2.0
+15 verbose npm  v11.15.0
+16 verbose exit 0
+17 info ok

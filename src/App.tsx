@@ -1,47 +1,44 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoadingScreen from './components/LoadingScreen';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import Guide from './pages/Guide';
-import Packages from './pages/Packages';
-import Addons from './pages/Addons';
-import Checkout from './pages/Checkout';
-import Policy from './pages/Policy';
-import Privacy from './pages/Privacy';
-import Contact from './pages/Contact';
+import React, { useState, useCallback } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import IntersectObserver from '@/components/common/IntersectObserver';
+import { Toaster } from '@/components/ui/sonner';
+import Layout from '@/components/layout/Layout';
+import LoadingScreen from '@/components/LoadingScreen';
+import { FavoritesProvider } from '@/contexts/FavoritesContext';
+import { DashboardStatsProvider } from '@/contexts/DashboardStatsContext';
 
-function App() {
+import { routes } from './routes';
+
+const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Set a slightly longer timeout than the loader's internal timer
-    // to ensure smooth transition
-    const timer = setTimeout(() => setLoading(false), 4800);
-    return () => clearTimeout(timer);
+  const handleLoadingComplete = useCallback(() => {
+    setLoading(false);
   }, []);
-
-  // Show loading screen first
-  if (loading) {
-    return <LoadingScreen />;
-  }
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="guide" element={<Guide />} />
-          <Route path="packages" element={<Packages />} />
-          <Route path="addons" element={<Addons />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="policy" element={<Policy />} />
-          <Route path="privacy" element={<Privacy />} />
-          <Route path="contact" element={<Contact />} />
-        </Route>
-      </Routes>
+      <DashboardStatsProvider>
+        <FavoritesProvider>
+          <IntersectObserver />
+          {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
+          <Layout>
+            <Routes>
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Layout>
+          <Toaster />
+        </FavoritesProvider>
+      </DashboardStatsProvider>
     </Router>
   );
-}
+};
 
 export default App;
